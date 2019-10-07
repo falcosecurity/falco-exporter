@@ -15,7 +15,7 @@ import (
 func main() {
 
 	addr := ""
-	pflag.StringVar(&addr, "listen-address", ":9188", "address on which to expose the Prometheus metrics")
+	pflag.StringVar(&addr, "listen-address", ":9376", "address on which to expose the Prometheus metrics")
 
 	config := &client.Config{}
 	pflag.StringVar(&config.Hostname, "client-hostname", "localhost", "hostname for connecting to a Falco gRPC server")

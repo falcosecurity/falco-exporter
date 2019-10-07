@@ -9,7 +9,7 @@
 make
 ./falco-exporter
 ```
-http://localhost:9188/metrics
+http://localhost:9376/metrics
 
 ```
 Usage of ./falco-exporter:
@@ -18,5 +18,5 @@ Usage of ./falco-exporter:
       --client-hostname string   hostname for connecting to a Falco gRPC server (default "localhost")
       --client-key string        key file path for connecting to a Falco gRPC server (default "/tmp/client.key")
       --client-port uint16       port for connecting to a Falco gRPC server (default 5060)
-      --listen-address string    address on which to expose the Prometheus metrics (default ":9188")
+      --listen-address string    address on which to expose the Prometheus metrics (default ":9376")
 ```
