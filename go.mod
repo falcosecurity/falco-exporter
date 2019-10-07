@@ -1,4 +1,4 @@
-module github.com/leogr/falco-exporter
+module github.com/falcosecurity/falco-exporter
 
 go 1.13
 

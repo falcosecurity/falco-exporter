@@ -7,7 +7,7 @@ import (
 	"net/http"
 
 	"github.com/falcosecurity/client-go/pkg/client"
-	"github.com/leogr/falco-exporter/pkg/exporter"
+	"github.com/falcosecurity/falco-exporter/pkg/exporter"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/spf13/pflag"
 )
