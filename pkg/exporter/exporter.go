@@ -16,6 +16,7 @@ var (
 		[]string{
 			"rule",
 			"priority",
+			"hostname",
 		},
 	)
 )
@@ -42,6 +43,7 @@ func Subscribe(ctx context.Context, outputClient output.ServiceClient) error {
 		eventsCounter.With(prometheus.Labels{
 			"rule":     res.Rule,
 			"priority": fmt.Sprintf("%d", res.Priority),
+			"hostname": res.Hostname,
 		}).Inc()
 	}
 }
