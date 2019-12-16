@@ -3,10 +3,10 @@ FROM golang:1.13.4-buster AS builder
 ENV GO111MODULE on
 ENV CGO_ENABLED 0
 
-ENV CLIENT_CA "/tmp/ca.crt"
-ENV CLIENT_CERT "/tmp/client.crt"
+ENV CLIENT_CA "/etc/falco/certs/ca.crt"
+ENV CLIENT_CERT "/etc/falco/certs/client.crt"
 ENV CLIENT_HOSTNAME "localhost"
-ENV CLIENT_KEY "/tmp/client.key"
+ENV CLIENT_KEY "/etc/falco/certs/client.key"
 ENV CLIENT_PORT "5060"
 ENV LISTEN_ADDRESS ":9376"
 

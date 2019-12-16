@@ -13,10 +13,10 @@ http://localhost:9376/metrics
 
 ```
 Usage of ./falco-exporter:
-      --client-ca string         CA root file path for connecting to a Falco gRPC server (default "/tmp/ca.crt")
-      --client-cert string       cert file path for connecting to a Falco gRPC server (default "/tmp/client.crt")
+      --client-ca string         CA root file path for connecting to a Falco gRPC server (default "/etc/falco/certs/ca.crt")
+      --client-cert string       cert file path for connecting to a Falco gRPC server (default "/etc/falco/certs/client.crt")
       --client-hostname string   hostname for connecting to a Falco gRPC server (default "localhost")
-      --client-key string        key file path for connecting to a Falco gRPC server (default "/tmp/client.key")
+      --client-key string        key file path for connecting to a Falco gRPC server (default "/etc/falco/certs/client.key")
       --client-port uint16       port for connecting to a Falco gRPC server (default 5060)
       --listen-address string    address on which to expose the Prometheus metrics (default ":9376")
 ```

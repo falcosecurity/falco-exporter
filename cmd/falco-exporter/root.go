@@ -20,9 +20,9 @@ func main() {
 	config := &client.Config{}
 	pflag.StringVar(&config.Hostname, "client-hostname", "localhost", "hostname for connecting to a Falco gRPC server")
 	pflag.Uint16Var(&config.Port, "client-port", 5060, "port for connecting to a Falco gRPC server")
-	pflag.StringVar(&config.CertFile, "client-cert", "/tmp/client.crt", "cert file path for connecting to a Falco gRPC server")
-	pflag.StringVar(&config.KeyFile, "client-key", "/tmp/client.key", "key file path for connecting to a Falco gRPC server")
-	pflag.StringVar(&config.CARootFile, "client-ca", "/tmp/ca.crt", "CA root file path for connecting to a Falco gRPC server")
+	pflag.StringVar(&config.CertFile, "client-cert", "/etc/falco/certs/client.crt", "cert file path for connecting to a Falco gRPC server")
+	pflag.StringVar(&config.KeyFile, "client-key", "/etc/falco/certs/client.key", "key file path for connecting to a Falco gRPC server")
+	pflag.StringVar(&config.CARootFile, "client-ca", "/etc/falco/certs/ca.crt", "CA root file path for connecting to a Falco gRPC server")
 
 	pflag.CommandLine.AddGoFlagSet(goflag.CommandLine)
 	pflag.Parse()
