@@ -1,0 +1,67 @@
+---
+# Source: falco-exporter/templates/daemonset.yaml
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: falco-exporter
+  labels:
+    app.kubernetes.io/name: falco-exporter
+    app.kubernetes.io/instance: falco-exporter
+    app.kubernetes.io/version: "0.1.0"
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: falco-exporter
+      app.kubernetes.io/instance: falco-exporter
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: falco-exporter
+        app.kubernetes.io/instance: falco-exporter
+    spec:
+      serviceAccountName: falco-exporter
+      securityContext:
+        {}
+      containers:
+        - name: falco-exporter
+          securityContext:
+            {}
+          image: "falcosecurity/falco-exporter:latest"
+          imagePullPolicy: IfNotPresent
+          args:
+            - /usr/bin/falco-exporter
+            - --client-hostname=falco-grpc.default.svc.cluster.local
+            - --client-port=5060
+            - --listen-address=0.0.0.0:9376
+          ports:
+            - name: metrics
+              containerPort: 9376
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /metrics
+              port: 9376
+          readinessProbe:
+            httpGet:
+              path: /metrics
+              port: 9376
+          resources:
+            {}
+          volumeMounts:
+            - mountPath: /etc/falco/certs
+              name: certs-volume
+              readOnly: true
+      volumes:
+        - name: certs-volume
+          secret:
+            secretName: falco-exporter-certs
+            items:
+              - key: client.key
+                path: client.key
+              - key: client.crt
+                path: client.crt
+              - key: ca.crt
+                path: ca.crt
+      tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
