@@ -2,6 +2,7 @@ SHELL=/bin/bash -o pipefail
 
 DOCKER ?= docker
 GO ?= go
+HELM ?= helm
 
 COMMIT_NO := $(shell git rev-parse HEAD 2> /dev/null || true)
 GIT_COMMIT := $(if $(shell git status --porcelain --untracked-files=no),${COMMIT_NO}-dirty,${COMMIT_NO})
@@ -40,6 +41,13 @@ image/push:
 image/latest:
 	$(DOCKER) tag $(IMAGE_NAME_BUILDER_BASE_COMMIT) $(IMAGE_NAME_BUILDER_BASE_LATEST)
 	$(DOCKER) push $(IMAGE_NAME_BUILDER_BASE_LATEST)
+
+.PHONY: deploy/k8s
+deploy/k8s:
+	rm -rf deploy/k8s/*
+	$(HELM) template falco-exporter deploy/helm/falco-exporter \
+		--set skipHelm=true \
+		--output-dir deploy/k8s
 
 .PHONY: test
 test:
