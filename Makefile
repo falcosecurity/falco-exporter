@@ -42,9 +42,9 @@ image/latest:
 	$(DOCKER) tag $(IMAGE_NAME_BUILDER_BASE_COMMIT) $(IMAGE_NAME_BUILDER_BASE_LATEST)
 	$(DOCKER) push $(IMAGE_NAME_BUILDER_BASE_LATEST)
 
-.PHONY: deploy/k8s
-deploy/k8s:
-	rm -rf deploy/k8s/*
+.PHONY: deploy/k8s/templates
+deploy/k8s/templates:
+	rm -rf deploy/k8s/templates/*
 	$(HELM) template falco-exporter deploy/helm/falco-exporter \
 		--set skipHelm=true \
 		--output-dir deploy/k8s
