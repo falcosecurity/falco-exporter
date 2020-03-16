@@ -41,3 +41,9 @@ helm install falco-exporter \
 The command deploys **falco-exporter** as Daemon Set on your the Kubernetes cluster. If a [Prometheus installation](https://github.com/helm/charts/tree/master/stable/prometheus) is running within your cluster, metrics provided by **falco-exporter** will be automatically discovered.
 
 Alternatively, it is possible to deploy **falco-exporter** without using Helm. Templates for manual installation are [here](deploy/k8s/falco-exporter).
+
+### Grafana
+
+The **Falco dashboard** can be imported into Grafana by copy-paste the provided [grafana/dashboard.json](grafana/dashboard.json) or by [getting it from the Grafana Dashboards](https://grafana.com/grafana/dashboards/11914) website.
+
+You can find detailed Grafana importing instructions [here](https://grafana.com/docs/reference/export_import/).
