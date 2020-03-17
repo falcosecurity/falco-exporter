@@ -47,3 +47,5 @@ Alternatively, it is possible to deploy **falco-exporter** without using Helm. T
 The **Falco dashboard** can be imported into Grafana by copy-paste the provided [grafana/dashboard.json](grafana/dashboard.json) or by [getting it from the Grafana Dashboards](https://grafana.com/grafana/dashboards/11914) website.
 
 You can find detailed Grafana importing instructions [here](https://grafana.com/docs/reference/export_import/).
+
+![Falco dashboard](https://github.com/falcosecurity/falco-exporter/raw/master/grafana/preview.png)
