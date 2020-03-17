@@ -11,7 +11,6 @@ builds:
     - 386
     main: ./cmd/falco-exporter
     env:
-      - GO111MODULE=on
       - CGO_ENABLED=0
     binary: falco-exporter
 
