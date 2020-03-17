@@ -1,0 +1,23 @@
+project_name: falco-exporter
+before:
+  hooks:
+    - go mod tidy
+builds:
+  - id: "falco-exporter"
+    goos:
+    - linux
+    goarch:
+    - amd64
+    - 386
+    main: ./cmd/falco-exporter
+    env:
+      - GO111MODULE=on
+      - CGO_ENABLED=0
+    binary: falco-exporter
+
+snapshot:
+  name_template: 'master'
+
+release:
+  github:
+  prerelease: auto
