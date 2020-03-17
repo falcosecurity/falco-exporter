@@ -1,7 +1,10 @@
 # falco-exporter
 > Prometheus Metrics Exporter for Falco output events
 
-Status: **Under development**
+[![Release](https://img.shields.io/github/release/falcosecurity/falco-exporter.svg?style=flat-square)](https://github.com/falcosecurity/falco-exporter/releases/latest)
+[![License](https://img.shields.io/github/license/falcosecurity/falco-exporter?style=flat-square)](LICENSE)
+[![Go Report Card](https://goreportcard.com/badge/github.com/falcosecurity/falco-exporter?style=flat-square)](https://goreportcard.com/report/github.com/falcosecurity/falco-exporter)
+[![Docker pulls](https://img.shields.io/docker/pulls/falcosecurity/falco-exporter?style=flat-square)](https://hub.docker.com/r/falcosecurity/falco-exporter)
 
 ## Prerequisites
 
@@ -11,12 +14,14 @@ Before using **falco-exporter**, you need [Falco installed](https://falco.org/do
 ## Usage
 
 ### Run it manually
+
 ```
 make
 ./falco-exporter
 ```
-http://localhost:9376/metrics
+Then check the metrics endpoint at http://localhost:9376/metrics
 
+Command line usage:
 ```
 Usage of ./falco-exporter:
       --client-ca string         CA root file path for connecting to a Falco gRPC server (default "/etc/falco/certs/ca.crt")
