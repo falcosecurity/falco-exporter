@@ -1,8 +1,6 @@
 # Release Process
 
-Currently, our release process is partially automated. We use: 
-- the [goreleaser](https://github.com/goreleaser/goreleaser) tool for artifacts
-- the provided `Makefile` for the container image
+Currently, our release process is partially automated. We use the [goreleaser](https://github.com/goreleaser/goreleaser) tool for artifacts.
 
 When we release we do the following process:
 
@@ -27,15 +25,7 @@ export GITHUB_TOKEN=<YOUR_GH_TOKEN>
 goreleaser --rm-dist
 ```
 
-Finally, build and publish the container image
-
-```
-make image/build
-make image/push
-make image/latest
-```
-
 ## TODO
 
+- [x] Setup goreleaser to build and publish images
 - [ ] Setup goreleaser [on a CI system](https://goreleaser.com/ci/), ie., CircleCI
-- [ ] Build and publish images using a CI system, ie., CircleCI
