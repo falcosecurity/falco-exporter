@@ -23,7 +23,6 @@ dockers:
     image_templates:
       - "falcosecurity/falco-exporter:latest"
       - "falcosecurity/falco-exporter:{{ .Version }}"
-      - "falcosecurity/falco-exporter:{{ .Major }}.{{ .Minor }}"
     build_flag_templates:
       - "--pull"
       - "--label=org.opencontainers.image.created={{.Date}}"
@@ -36,9 +35,6 @@ dockers:
       - go.mod
       - go.sum
       - Makefile
-
-snapshot:
-  name_template: 'master'
 
 release:
   github:
