@@ -1,6 +1,5 @@
-FROM golang:1.13.4-buster AS builder
+FROM golang:1.14-buster AS builder
 
-ENV GO111MODULE on
 ENV CGO_ENABLED 0
 
 ENV CLIENT_CA "/etc/falco/certs/ca.crt"
@@ -18,7 +17,7 @@ RUN go mod download
 COPY . .
 RUN make
 
-FROM alpine:3.10
+FROM alpine:3.11
 WORKDIR /opt/falco-exporter
 
 RUN addgroup -S falcoexporter && adduser -S falcoexporter -G falcoexporter
