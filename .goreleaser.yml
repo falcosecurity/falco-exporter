@@ -18,7 +18,6 @@ dockers:
   -
     goos: linux
     goarch: amd64
-    skip_push: false
     dockerfile: build/Dockerfile
     image_templates:
       - "falcosecurity/falco-exporter:latest"
