@@ -3,13 +3,18 @@ package main
 import (
 	"context"
 	goflag "flag"
+	"fmt"
 	"log"
+	"net"
 	"net/http"
+	"time"
 
 	"github.com/falcosecurity/client-go/pkg/client"
 	"github.com/falcosecurity/falco-exporter/pkg/exporter"
+	"github.com/oklog/run"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/spf13/pflag"
+	"github.com/ssgreg/repeat"
 )
 
 func main() {
@@ -32,22 +37,51 @@ func main() {
 		log.Fatalf("unable to connect: %v", err)
 	}
 	defer c.Close()
+
 	outputClient, err := c.Output()
 	if err != nil {
 		log.Fatalf("unable to obtain an output client: %v", err)
 	}
 
 	ctx := context.Background()
-	go func() {
-		if err := exporter.Subscribe(ctx, outputClient); err != nil {
-			if err != nil {
-				log.Fatalf("exporter error: %v", err)
+
+	g := run.Group{}
+	g.Add(
+		func() error {
+			op := func(c int) error {
+				err := exporter.Subscribe(ctx, outputClient)
+				if err != nil {
+					return repeat.HintTemporary(
+						fmt.Errorf("server subscription (attempt %d) unavailable: %w", c, err),
+					)
+				}
+				return nil
 			}
-		}
-	}()
+			return repeat.Repeat(
+				repeat.FnWithCounter(op),
+				repeat.LimitMaxTries(30),
+				repeat.WithDelay(
+					repeat.FullJitterBackoff(10*time.Second).Set(),
+					repeat.SetContext(ctx),
+				),
+			)
+		},
+		func(err error) {
+			log.Println("exiting due to repeated error: ", err)
+		},
+	)
 
 	http.Handle("/metrics", promhttp.Handler())
-	if err = http.ListenAndServe(addr, nil); err != nil {
-		log.Fatalf("%v", err)
-	}
+	ln, _ := net.Listen("tcp", addr)
+	g.Add(
+		func() error {
+			return http.Serve(ln, nil)
+		},
+		func(error) {
+			ln.Close()
+		},
+	)
+
+	// Exit with first error from the run group.
+	log.Fatalln(g.Run())
 }
