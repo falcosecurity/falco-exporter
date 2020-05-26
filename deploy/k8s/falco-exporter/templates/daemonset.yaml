@@ -32,6 +32,7 @@ spec:
             - /usr/bin/falco-exporter
             - --client-hostname=falco-grpc.default.svc.cluster.local
             - --client-port=5060
+            - --timeout=2m
             - --listen-address=0.0.0.0:9376
           ports:
             - name: metrics
@@ -43,7 +44,7 @@ spec:
               port: 9376
           readinessProbe:
             httpGet:
-              path: /metrics
+              path: /readiness
               port: 9376
           resources:
             {}
