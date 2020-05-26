@@ -78,6 +78,6 @@ func serveMetrics(addr string) {
 
 func enableReadiness() {
 	http.HandleFunc("/readiness", func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(http.StatusOK)
+		w.WriteHeader(http.StatusNoContent)
 	})
 }
