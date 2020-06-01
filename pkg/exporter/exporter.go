@@ -17,6 +17,8 @@ var (
 			"rule",
 			"priority",
 			"hostname",
+			"event_pod_name",
+			"event_namespace",
 		},
 	)
 )
@@ -34,16 +36,36 @@ func Subscribe(ctx context.Context, outputClient output.ServiceClient) error {
 		return err
 	}
 
+	var namespace string
+	var podName string
+
 	for {
 		res, err := fcs.Recv()
 		if err != nil {
 			return err
 		}
 
+		namespace = ""
+		podName = ""
+
+		//Ensure OutputFields are enabled
+		if res.OutputFields != nil{
+			ns,ok := res.OutputFields["k8s.ns.name"]
+			if ok{
+				namespace = ns
+			}
+			pn,ok := res.OutputFields["k8s.pod.name"]
+			if ok{
+				podName = pn
+			}
+		}
+
 		eventsCounter.With(prometheus.Labels{
 			"rule":     res.Rule,
 			"priority": fmt.Sprintf("%d", res.Priority),
 			"hostname": res.Hostname,
+			"event_pod_name": podName,
+			"event_namespace": namespace,
 		}).Inc()
 	}
 }
