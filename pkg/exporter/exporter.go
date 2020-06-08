@@ -17,6 +17,7 @@ var (
 			"rule",
 			"priority",
 			"hostname",
+			"source",
 			"k8s_ns_name",
 			"k8s_pod_name",
 		},
@@ -46,6 +47,7 @@ func Subscribe(ctx context.Context, outputClient output.ServiceClient) error {
 			"rule":         res.Rule,
 			"priority":     fmt.Sprintf("%d", res.Priority),
 			"hostname":     res.Hostname,
+			"source":       res.Source.String(),
 			"k8s_ns_name":  "",
 			"k8s_pod_name": "",
 		}
