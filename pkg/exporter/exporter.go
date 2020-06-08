@@ -17,8 +17,8 @@ var (
 			"rule",
 			"priority",
 			"hostname",
-			"event_pod_name",
-			"event_namespace",
+			"k8s_ns_name",
+			"k8s_pod_name",
 		},
 	)
 )
@@ -36,36 +36,26 @@ func Subscribe(ctx context.Context, outputClient output.ServiceClient) error {
 		return err
 	}
 
-	var namespace string
-	var podName string
-
 	for {
 		res, err := fcs.Recv()
 		if err != nil {
 			return err
 		}
 
-		namespace = ""
-		podName = ""
-
-		//Ensure OutputFields are enabled
-		if res.OutputFields != nil{
-			ns,ok := res.OutputFields["k8s.ns.name"]
-			if ok{
-				namespace = ns
-			}
-			pn,ok := res.OutputFields["k8s.pod.name"]
-			if ok{
-				podName = pn
-			}
+		labels := prometheus.Labels{
+			"rule":         res.Rule,
+			"priority":     fmt.Sprintf("%d", res.Priority),
+			"hostname":     res.Hostname,
+			"k8s_ns_name":  "",
+			"k8s_pod_name": "",
 		}
 
-		eventsCounter.With(prometheus.Labels{
-			"rule":     res.Rule,
-			"priority": fmt.Sprintf("%d", res.Priority),
-			"hostname": res.Hostname,
-			"event_pod_name": podName,
-			"event_namespace": namespace,
-		}).Inc()
+		// Ensure OutputFields are enabled
+		if res.OutputFields != nil {
+			labels["k8s_ns_name"] = res.OutputFields["k8s.ns.name"]
+			labels["k8s_pod_name"] = res.OutputFields["k8s.pod.name"]
+		}
+
+		eventsCounter.With(labels).Inc()
 	}
 }
