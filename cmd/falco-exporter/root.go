@@ -41,30 +41,36 @@ func main() {
 	go serveMetrics(addr)
 
 	log.Printf("connecting to gRPC server %s:%d", config.Hostname, config.Port)
+
+	ctx := context.Background()
+
 	// cancel the pending connection after timeout is reached
-	dialerCtx, cancelTimeout := context.WithTimeout(context.Background(), timeout)
+	dialerCtx, cancelTimeout := context.WithTimeout(ctx, timeout)
 	c, err := client.NewForConfig(dialerCtx, config)
 	if err != nil {
 		log.Fatalf("gRPC: %v\n", err)
 	}
 	defer c.Close()
-	outputClient, err := c.Output()
+
+	log.Println("connected to gRPC server, subscribing events stream")
+
+	oc, err := c.Outputs()
 	if err != nil {
 		log.Fatalf("gRPC: %v\n", err)
 	}
 
-	log.Println("connected to gRPC server, subscribing events stream")
-
-	recv, err := exporter.Subscribe(context.Background(), outputClient)
+	fsc, err := oc.Sub(ctx)
 	if err != nil {
 		log.Fatalf("gRPC: %v\n", err)
 	}
 
 	cancelTimeout()
 	enableReadiness()
-	log.Println("ready, receiving events")
-	if err := recv(); err != nil {
+
+	if err := exporter.Watch(ctx, fsc, time.Second); err != nil {
 		log.Fatalf("gRPC: %v\n", err)
+	} else {
+		log.Println("gRPC stream closed")
 	}
 }
 
@@ -77,6 +83,7 @@ func serveMetrics(addr string) {
 }
 
 func enableReadiness() {
+	log.Println("ready")
 	http.HandleFunc("/readiness", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusNoContent)
 	})
