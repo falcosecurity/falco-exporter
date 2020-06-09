@@ -42,7 +42,8 @@ func main() {
 
 	log.Printf("connecting to gRPC server %s:%d", config.Hostname, config.Port)
 
-	ctx := context.Background()
+	// main context
+	ctx := withSignals(context.Background())
 
 	// cancel the pending connection after timeout is reached
 	dialerCtx, cancelTimeout := context.WithTimeout(ctx, timeout)
