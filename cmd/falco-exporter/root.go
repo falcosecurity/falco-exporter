@@ -29,7 +29,8 @@ func main() {
 			grpc.WithBlock(),
 		},
 	}
-	pflag.StringVar(&config.Hostname, "client-hostname", "localhost", "hostname for connecting to a Falco gRPC server")
+	pflag.StringVar(&config.UnixSocketPath, "client-socket", "unix:///var/run/falco.sock", "unix socket path for connecting to a Falco gRPC server")
+	pflag.StringVar(&config.Hostname, "client-hostname", "", "hostname for connecting to a Falco gRPC server, if set, takes precedence over --client-socket")
 	pflag.Uint16Var(&config.Port, "client-port", 5060, "port for connecting to a Falco gRPC server")
 	pflag.StringVar(&config.CertFile, "client-cert", "/etc/falco/certs/client.crt", "cert file path for connecting to a Falco gRPC server")
 	pflag.StringVar(&config.KeyFile, "client-key", "/etc/falco/certs/client.key", "key file path for connecting to a Falco gRPC server")
@@ -40,7 +41,12 @@ func main() {
 
 	go serveMetrics(addr)
 
-	log.Printf("connecting to gRPC server %s:%d", config.Hostname, config.Port)
+	if config.Hostname != "" {
+		config.UnixSocketPath = ""
+		log.Printf("connecting to gRPC server at %s:%d", config.Hostname, config.Port)
+	} else {
+		log.Printf("connecting to gRPC server at %s", config.UnixSocketPath)
+	}
 
 	// main context
 	ctx := withSignals(context.Background())
