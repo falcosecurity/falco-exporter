@@ -7,7 +7,7 @@ metadata:
   labels:
     app.kubernetes.io/name: falco-exporter
     app.kubernetes.io/instance: falco-exporter
-    app.kubernetes.io/version: "0.1.0"
+    app.kubernetes.io/version: "0.2.0"
 spec:
   selector:
     matchLabels:
@@ -30,8 +30,8 @@ spec:
           imagePullPolicy: IfNotPresent
           args:
             - /usr/bin/falco-exporter
-            - --client-hostname=falco-grpc.default.svc.cluster.local
-            - --client-port=5060
+            - --client-socket=unix:///var/run/falco/falco.sock
+            
             - --timeout=2m
             - --listen-address=0.0.0.0:9376
           ports:
@@ -49,20 +49,15 @@ spec:
           resources:
             {}
           volumeMounts:
-            - mountPath: /etc/falco/certs
-              name: certs-volume
+            - mountPath: /var/run/falco
+              name: falco-socket-dir
               readOnly: true
+          
       volumes:
-        - name: certs-volume
-          secret:
-            secretName: falco-exporter-certs
-            items:
-              - key: client.key
-                path: client.key
-              - key: client.crt
-                path: client.crt
-              - key: ca.crt
-                path: ca.crt
+        - name: falco-socket-dir
+          hostPath: 
+            path: /var/run/falco
+      
       tolerations:
         - effect: NoSchedule
           key: node-role.kubernetes.io/master
