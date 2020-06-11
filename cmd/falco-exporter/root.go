@@ -43,9 +43,9 @@ func main() {
 
 	if config.Hostname != "" {
 		config.UnixSocketPath = ""
-		log.Printf("connecting to gRPC server at %s:%d", config.Hostname, config.Port)
+		log.Printf("connecting to gRPC server at %s:%d (timeout %s)", config.Hostname, config.Port, timeout)
 	} else {
-		log.Printf("connecting to gRPC server at %s", config.UnixSocketPath)
+		log.Printf("connecting to gRPC server at %s (timeout %s)", config.UnixSocketPath, timeout)
 	}
 
 	// main context
