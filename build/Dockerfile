@@ -14,9 +14,6 @@ RUN make
 FROM alpine:3.11
 WORKDIR /opt/falco-exporter
 
-RUN addgroup -S falcoexporter && adduser -S falcoexporter -G falcoexporter
-USER falcoexporter 
-
 COPY --from=builder /opt/falco-exporter/falco-exporter /usr/bin/falco-exporter
 
 EXPOSE 9376/tcp
