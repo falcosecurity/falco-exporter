@@ -7,25 +7,11 @@ This will result in a **falco-exporter** Pod being deployed to each node.
 
 ## Configuration
 
+The default configurations for connecting to a Falco gRPC server over Unix socket are:
 
-### Certificates
-The Daemon Set relies on a Kubernetes Secret to store the [certificates](https://falco.org/docs/grpc/#certificates). 
-
-Before deploying **falco-exporter** you have to add these certificates to `secret-certs.yaml`:
-
-```
-echo "  ca.crt: `cat /path/to/ca.crt | base64 -w0`" >> secret-certs.yaml
-echo "  client.crt: `cat /path/to/client.crt | base64 -w0`" >> secret-certs.yaml
-echo "  client.key: `cat /path/to/client.key | base64 -w0`" >> secret-certs.yaml
-```
-
-
-### Falco gRCP server
-
-The default configurations for connecting to a Falco gRPC server are:
-
-- hostname: `falco-grpc.default.svc.cluster.local`
-- port: `5060`
+- client-socket: `unix:///var/run/falco/falco.sock`
+- timeout: `2m`
+- listen-address: `0.0.0.0:9376`
 
 If needed, please modify them in `daemonset.yaml` according to your installation.
 
@@ -34,7 +20,6 @@ If needed, please modify them in `daemonset.yaml` according to your installation
 ```
 kubectl create \
     -f daemonset.yaml \
-    -f secret-certs.yaml \
     -f serviceaccount.yaml \
     -f service.yaml
 ```
