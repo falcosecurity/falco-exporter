@@ -31,7 +31,6 @@ spec:
           args:
             - /usr/bin/falco-exporter
             - --client-socket=unix:///var/run/falco/falco.sock
-            
             - --timeout=2m
             - --listen-address=0.0.0.0:9376
           ports:
@@ -52,12 +51,10 @@ spec:
             - mountPath: /var/run/falco
               name: falco-socket-dir
               readOnly: true
-          
       volumes:
         - name: falco-socket-dir
           hostPath: 
             path: /var/run/falco
-      
       tolerations:
         - effect: NoSchedule
           key: node-role.kubernetes.io/master
