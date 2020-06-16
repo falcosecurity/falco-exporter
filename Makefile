@@ -9,12 +9,12 @@ TEST_FLAGS ?= -v -race
 falco-exporter:
 	$(GO) build ./cmd/falco-exporter
 
-.PHONY: deploy/k8s/templates
-deploy/k8s/templates:
-	rm -rf deploy/k8s/templates/*
+.PHONY: deploy/k8s
+deploy/k8s:
+	rm -rf $@/falco-exporter/templates/*
 	$(HELM) template falco-exporter deploy/helm/falco-exporter \
 		--set skipHelm=true \
-		--output-dir deploy/k8s
+		--output-dir $@
 
 .PHONY: test
 test:
