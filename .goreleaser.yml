@@ -1,7 +1,4 @@
 project_name: falco-exporter
-before:
-  hooks:
-    - go mod tidy
 builds:
   - id: "falco-exporter"
     goos:
