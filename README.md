@@ -38,16 +38,36 @@ Usage of ./falco-exporter:
       --timeout duration         timeout for initial gRPC connection (default 2m0s)
 ```
 
-### Deploy in Kubernetes
+### Run with Docker
 
-Using the [provided Helm chart](deploy/helm/falco-exporter/) is the easiest way to deploy **falco-exporter**.
+To run **falco-exporter** in a container using Docker:
 
-To install the chart with the release name `falco-exporter` and default [configuration values](deploy/helm/falco-exporter/values.yaml):
 ```shell
-helm install falco-exporter ./deploy/helm/falco-exporter
+docker run -v /path/to/falco.sock:/var/run/falco.sock falcosecurity/falco-exporter
 ```
 
-The command deploys **falco-exporter** as Daemon Set on your the Kubernetes cluster. If a [Prometheus installation](https://github.com/helm/charts/tree/master/stable/prometheus) is running within your cluster, metrics provided by **falco-exporter** will be automatically discovered.
+### Deploy in Kubernetes
+
+### Using Helm
+
+Using the [falco-exporter Helm Chart](https://github.com/falcosecurity/charts/tree/master/falco-exporter) is the easiest way to deploy **falco-exporter**.
+
+Before installing the chart, add the `falcosecurity` charts repository:
+
+```shell
+helm repo add falcosecurity https://falcosecurity.github.io/charts
+helm repo update
+```
+
+Finally, to install the chart with the release name `falco-exporter` and default [configuration values](https://github.com/falcosecurity/charts/blob/master/falco-exporter/values.yaml):
+
+```shell
+helm install falco-exporter falcosecurity/falco-exporter
+```
+
+The full documentation of the Helm Chart is [here](https://github.com/falcosecurity/charts/tree/master/falco-exporter).
+
+### Using resource templates
 
 Alternatively, it is possible to deploy **falco-exporter** without using Helm. Templates for manual installation are [here](deploy/k8s/falco-exporter).
 
@@ -61,6 +81,6 @@ You can find detailed Grafana importing instructions [here](https://grafana.com/
 
 ## Connection options
 
-**falco-exporter** uses gRPC over Unix socket by default. 
+**falco-exporter** uses gRPC over a Unix socket by default. 
 
 You may change this behavior by setting `--client-hostname`. Note that the Falco gRPC server over the network works only with mutual TLS by design. Therefore, when `--client-hostname` is set  you also need valid [certificate files](https://falco.org/docs/grpc/#certificates) to configure **falco-exporter** properly (see the *Command line usage* above).
