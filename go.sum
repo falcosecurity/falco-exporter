@@ -16,13 +16,8 @@ github.com/envoyproxy/go-control-plane v0.9.0/go.mod h1:YTl/9mNaCwkRvm6d1a2C3ymF
 github.com/envoyproxy/go-control-plane v0.9.1-0.20191026205805-5f8ba28d4473/go.mod h1:YTl/9mNaCwkRvm6d1a2C3ymFceY/DCBVvsKhRF0iEA4=
 github.com/envoyproxy/go-control-plane v0.9.4/go.mod h1:6rpuAdCZL397s3pYoYcLgu1mIlRU8Am5FuJP05cCM98=
 github.com/envoyproxy/protoc-gen-validate v0.1.0/go.mod h1:iSmxcyjqTsJpI2R4NaDN7+kN2VEUnK/pcBlmesArF7c=
-github.com/falcosecurity/client-go v0.1.0 h1:YU97iUyb3VAmm7odzzUj0DKjCJPfIcihKlOc+1DTLfs=
-github.com/falcosecurity/client-go v0.1.1-0.20200529161230-8578c36af411 h1:gO3zdypleXkYtybtT3u/yZrwE3f9QGm6+8CiMZTKIfo=
-github.com/falcosecurity/client-go v0.1.1-0.20200529161230-8578c36af411/go.mod h1:woDCVHKkEfisBI7+dgVs8NnbnlMj8vLoZ4BQQImQQP4=
-github.com/falcosecurity/client-go v0.1.1-0.20200608104935-59af564fe177 h1:y4VKxI07TzvVDk+jGC+2hwZni1YAO9MF2wS9FvUvhDg=
-github.com/falcosecurity/client-go v0.1.1-0.20200608104935-59af564fe177/go.mod h1:SvXQr53AiNuSs4AJBm2ZzPjgUeoKbjIVQZA9NRUyW0E=
-github.com/falcosecurity/client-go v0.1.1-0.20200609153459-3b6f8eb9e49d h1:gzrFNkvzSgiCJxawjKTJvpkFEnTNj1+S0sv/jielspI=
-github.com/falcosecurity/client-go v0.1.1-0.20200609153459-3b6f8eb9e49d/go.mod h1:SvXQr53AiNuSs4AJBm2ZzPjgUeoKbjIVQZA9NRUyW0E=
+github.com/falcosecurity/client-go v0.2.0 h1:8XCWg04hRI34PaOhg1W2aBmAEQb7L6BmtT03fQdKqYs=
+github.com/falcosecurity/client-go v0.2.0/go.mod h1:SvXQr53AiNuSs4AJBm2ZzPjgUeoKbjIVQZA9NRUyW0E=
 github.com/go-kit/kit v0.8.0/go.mod h1:xBxKIO96dXMWWy0MnWVtmwkA9/13aqxPnvrjFYMA2as=
 github.com/go-logfmt/logfmt v0.3.0/go.mod h1:Qt1PoO58o5twSAckw1HlFXLmHsOX5/0LbT9GBnD5lWE=
 github.com/go-logfmt/logfmt v0.4.0/go.mod h1:3RMwSq7FuexP4Kalkev3ejPJsZTpXXBr9+V4qmtdjCk=
@@ -31,8 +26,7 @@ github.com/gogo/protobuf v1.1.1/go.mod h1:r8qH/GZQm5c6nD/R0oafs1akxWv10x8SbQlK7a
 github.com/gogo/protobuf v1.3.1/go.mod h1:SlYgWuQ5SjCEi6WLHjHCa1yvBfUnHcTbrrZtXPKa29o=
 github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b/go.mod h1:SBH7ygxi8pfUlaOkMMuAQtPIUF8ecWP5IEl/CR7VP2Q=
 github.com/golang/mock v1.1.1/go.mod h1:oTYuIxOrZwtPieC+H1uAHpcLFnEyAGVDL/k47Jfbm0A=
-github.com/golang/mock v1.4.0 h1:Rd1kQnQu0Hq3qvJppYSG0HtP+f5LPPUiDswTLiEegLg=
-github.com/golang/mock v1.4.0/go.mod h1:UOMv5ysSaYNkG+OFQykRIcU/QvvxJf3p21QfJ2Bt3cw=
+github.com/golang/mock v1.4.3 h1:GV+pQPG/EUUbkh47niozDcADz6go/dUwhVzdUQHIVRw=
 github.com/golang/mock v1.4.3/go.mod h1:UOMv5ysSaYNkG+OFQykRIcU/QvvxJf3p21QfJ2Bt3cw=
 github.com/golang/protobuf v1.2.0/go.mod h1:6lQm79b+lXiMfvg/cZm0SGofjICqVBUtrP5yJMmIC1U=
 github.com/golang/protobuf v1.3.1/go.mod h1:6lQm79b+lXiMfvg/cZm0SGofjICqVBUtrP5yJMmIC1U=
