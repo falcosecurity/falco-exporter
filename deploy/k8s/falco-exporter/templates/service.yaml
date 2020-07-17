@@ -10,7 +10,7 @@ metadata:
   labels:
     app.kubernetes.io/name: falco-exporter
     app.kubernetes.io/instance: falco-exporter
-    app.kubernetes.io/version: "0.2.0"
+    app.kubernetes.io/version: "0.3.0"
 spec:
   clusterIP: None
   type: ClusterIP
