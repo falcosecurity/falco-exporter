@@ -2,6 +2,7 @@ SHELL=/bin/bash -o pipefail
 
 GO ?= go
 HELM ?= helm
+CHART_SOURCE_DIR ?= $(shell pwd)/../charts/falco-exporter
 
 TEST_FLAGS ?= -v -race
 
@@ -12,7 +13,7 @@ falco-exporter:
 .PHONY: deploy/k8s
 deploy/k8s:
 	rm -rf $@/falco-exporter/templates/*
-	$(HELM) template falco-exporter deploy/helm/falco-exporter \
+	$(HELM) template falco-exporter ${CHART_SOURCE_DIR} \
 		--set skipHelm=true \
 		--output-dir $@
 
