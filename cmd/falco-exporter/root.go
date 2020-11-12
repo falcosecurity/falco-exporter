@@ -2,7 +2,10 @@ package main
 
 import (
 	"context"
+	"crypto/tls"
+	"crypto/x509"
 	goflag "flag"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"time"
@@ -18,6 +21,15 @@ func main() {
 
 	var addr string
 	pflag.StringVar(&addr, "listen-address", ":9376", "address on which to expose the Prometheus metrics")
+
+	var serverCARootFile string
+	pflag.StringVar(&serverCARootFile, "server-ca", "", "CA root file path for metrics https server")
+
+	var serverCertFile string
+	pflag.StringVar(&serverCertFile, "server-cert", "", "cert file path for metrics https server")
+
+	var serverKeyFile string
+	pflag.StringVar(&serverKeyFile, "server-key", "", "key file path for metrics https server")
 
 	var timeout time.Duration
 	pflag.DurationVar(&timeout, "timeout", time.Minute*2, "timeout for initial gRPC connection")
@@ -36,10 +48,11 @@ func main() {
 	pflag.StringVar(&config.KeyFile, "client-key", "/etc/falco/certs/client.key", "key file path for connecting to a Falco gRPC server")
 	pflag.StringVar(&config.CARootFile, "client-ca", "/etc/falco/certs/ca.crt", "CA root file path for connecting to a Falco gRPC server")
 
+
 	pflag.CommandLine.AddGoFlagSet(goflag.CommandLine)
 	pflag.Parse()
 
-	go serveMetrics(addr)
+	go serveMetrics(addr, serverCARootFile, serverCertFile, serverKeyFile)
 
 	if config.Hostname != "" {
 		config.UnixSocketPath = ""
@@ -81,11 +94,43 @@ func main() {
 	}
 }
 
-func serveMetrics(addr string) {
+func serveMetrics(addr string, caFile string, cert string, key string) {
+	// Configure mTLS if applies
+	var mTLS = false
+	var tlsConfig *tls.Config = nil
+	if caFile != "" {
+		// Load CA cert
+		caCert, err := ioutil.ReadFile(caFile)
+		if err != nil {
+			log.Fatalf("mTLS: %v\n", err)
+		}
+		caCertPool := x509.NewCertPool()
+		caCertPool.AppendCertsFromPEM(caCert)
+		// Create the TLS Config with the CA pool and enable Client certificate validation
+		tlsConfig = &tls.Config{
+			ClientCAs: caCertPool,
+			ClientAuth: tls.RequireAndVerifyClientCert,
+		}
+		tlsConfig.BuildNameToCertificate()
+		log.Println("TLS configured successfully")
+		mTLS = true
+	} 
+
 	http.Handle("/metrics", promhttp.Handler())
-	log.Printf("listening on %s/metrics\n", addr)
-	if err := http.ListenAndServe(addr, nil); err != nil {
-		log.Fatalf("server: %v", err)
+	if mTLS {
+		server := &http.Server{
+		Addr:      addr,
+		TLSConfig: tlsConfig,
+		}
+		log.Printf("listening on https://%s/metrics\n", addr)
+		if err := server.ListenAndServeTLS(cert, key); err != nil {
+			log.Fatalf("TLS server: %v", err)
+		}
+	} else {
+		log.Printf("listening on http://%s/metrics\n", addr)
+		if err := http.ListenAndServe(addr, nil); err != nil {
+			log.Fatalf("server: %v", err)
+		}
 	}
 }
 
@@ -95,3 +140,4 @@ func enableReadiness() {
 		w.WriteHeader(http.StatusNoContent)
 	})
 }
+
