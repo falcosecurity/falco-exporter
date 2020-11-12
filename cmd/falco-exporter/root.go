@@ -48,7 +48,6 @@ func main() {
 	pflag.StringVar(&config.KeyFile, "client-key", "/etc/falco/certs/client.key", "key file path for connecting to a Falco gRPC server")
 	pflag.StringVar(&config.CARootFile, "client-ca", "/etc/falco/certs/ca.crt", "CA root file path for connecting to a Falco gRPC server")
 
-
 	pflag.CommandLine.AddGoFlagSet(goflag.CommandLine)
 	pflag.Parse()
 
@@ -108,19 +107,18 @@ func serveMetrics(addr string, caFile string, cert string, key string) {
 		caCertPool.AppendCertsFromPEM(caCert)
 		// Create the TLS Config with the CA pool and enable Client certificate validation
 		tlsConfig = &tls.Config{
-			ClientCAs: caCertPool,
+			ClientCAs:  caCertPool,
 			ClientAuth: tls.RequireAndVerifyClientCert,
 		}
-		tlsConfig.BuildNameToCertificate()
 		log.Println("TLS configured successfully")
 		mTLS = true
-	} 
+	}
 
 	http.Handle("/metrics", promhttp.Handler())
 	if mTLS {
 		server := &http.Server{
-		Addr:      addr,
-		TLSConfig: tlsConfig,
+			Addr:      addr,
+			TLSConfig: tlsConfig,
 		}
 		log.Printf("listening on https://%s/metrics\n", addr)
 		if err := server.ListenAndServeTLS(cert, key); err != nil {
@@ -140,4 +138,3 @@ func enableReadiness() {
 		w.WriteHeader(http.StatusNoContent)
 	})
 }
-
