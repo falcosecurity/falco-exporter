@@ -17,5 +17,6 @@ WORKDIR /opt/falco-exporter
 COPY --from=builder /opt/falco-exporter/falco-exporter /usr/bin/falco-exporter
 
 EXPOSE 9376/tcp
+EXPOSE 19376/tcp
 
 ENTRYPOINT ["/usr/bin/falco-exporter"]
