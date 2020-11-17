@@ -22,6 +22,9 @@ func main() {
 	var addr string
 	pflag.StringVar(&addr, "listen-address", ":9376", "address on which to expose the Prometheus metrics")
 
+	var probesAddr string
+	pflag.StringVar(&probesAddr, "probes-listen-address", ":19376", "address on which to expose readiness/liveness probes endpoints")
+
 	var serverCARootFile string
 	pflag.StringVar(&serverCARootFile, "server-ca", "", "CA root file path for metrics https server")
 
@@ -52,6 +55,7 @@ func main() {
 	pflag.Parse()
 
 	go serveMetrics(addr, serverCARootFile, serverCertFile, serverKeyFile)
+	probeMux := enableProbes(probesAddr)
 
 	if config.Hostname != "" {
 		config.UnixSocketPath = ""
@@ -84,7 +88,8 @@ func main() {
 	}
 
 	cancelTimeout()
-	enableReadiness()
+	enableReadiness(probeMux)
+	log.Println("ready")
 
 	if err := exporter.Watch(ctx, fsc, time.Second); err != nil {
 		log.Fatalf("gRPC: %v\n", err)
@@ -132,9 +137,22 @@ func serveMetrics(addr string, caFile string, cert string, key string) {
 	}
 }
 
-func enableReadiness() {
-	log.Println("ready")
-	http.HandleFunc("/readiness", func(w http.ResponseWriter, r *http.Request) {
+func enableProbes(probesAddr string) (probeMux *http.ServeMux) {
+	// probes are served in a different ServeMux since a possible mTLS config may be used on main server (/metrics)
+	probeMux = http.NewServeMux()
+	probeMux.HandleFunc("/liveness", func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusNoContent)
+	})
+	go func() {
+		if err := http.ListenAndServe(probesAddr, probeMux); err != nil {
+			log.Fatalf("healthz server: %v", err)
+		}
+	}()
+	return
+}
+
+func enableReadiness(probeMux *http.ServeMux) {
+	probeMux.HandleFunc("/readiness", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusNoContent)
 	})
 }
