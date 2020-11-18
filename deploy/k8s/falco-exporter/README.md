@@ -19,7 +19,7 @@ If needed, please modify them in `daemonset.yaml` according to your installation
 
 ```
 kubectl create \
-    -f daemonset.yaml \
-    -f serviceaccount.yaml \
-    -f service.yaml
+    -f ./templates/daemonset.yaml \
+    -f ./templates/serviceaccount.yaml \
+    -f ./templates/service.yaml
 ```
