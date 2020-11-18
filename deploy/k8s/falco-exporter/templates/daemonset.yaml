@@ -7,7 +7,6 @@ metadata:
   labels:
     app.kubernetes.io/name: falco-exporter
     app.kubernetes.io/instance: falco-exporter
-    app.kubernetes.io/version: "0.3.0"
 spec:
   selector:
     matchLabels:
@@ -39,12 +38,12 @@ spec:
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /metrics
-              port: 9376
+              path: /liveness
+              port: 19376
           readinessProbe:
             httpGet:
               path: /readiness
-              port: 9376
+              port: 19376
           resources:
             {}
           volumeMounts:
@@ -53,7 +52,7 @@ spec:
               readOnly: true
       volumes:
         - name: falco-socket-dir
-          hostPath: 
+          hostPath:
             path: /var/run/falco
       tolerations:
         - effect: NoSchedule
