@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/falcosecurity/client-go/pkg/client"
@@ -61,6 +62,9 @@ func main() {
 		config.UnixSocketPath = ""
 		log.Printf("connecting to gRPC server at %s:%d (timeout %s)", config.Hostname, config.Port, timeout)
 	} else {
+		if !strings.HasPrefix("unix://", config.UnixSocketPath) {
+			config.UnixSocketPath = "unix://" + config.UnixSocketPath
+		}
 		log.Printf("connecting to gRPC server at %s (timeout %s)", config.UnixSocketPath, timeout)
 	}
 
