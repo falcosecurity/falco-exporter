@@ -62,7 +62,7 @@ func main() {
 		config.UnixSocketPath = ""
 		log.Printf("connecting to gRPC server at %s:%d (timeout %s)", config.Hostname, config.Port, timeout)
 	} else {
-		if !strings.HasPrefix("unix://", config.UnixSocketPath) {
+		if !strings.HasPrefix(config.UnixSocketPath, "unix://") {
 			config.UnixSocketPath = "unix://" + config.UnixSocketPath
 		}
 		log.Printf("connecting to gRPC server at %s (timeout %s)", config.UnixSocketPath, timeout)
