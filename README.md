@@ -83,6 +83,22 @@ You can find detailed Grafana importing instructions [here](https://grafana.com/
 
 ![Falco dashboard](https://github.com/falcosecurity/falco-exporter/raw/master/grafana/preview.png)
 
+## Event priority
+
+Falco events have a priority value, as defined [here](https://github.com/falcosecurity/falco/blob/b76420fe471f8af220d742543637b5aae02ee556/userspace/engine/falco_common.h#L82-L89).
+The exported metrics will include a `priority` label that uses a numeric index. The meaning of these indices is reported in the following table.
+
+| ID  | Priority      |
+| --- | ------------- |
+| 7   | debug         |
+| 6   | informational |
+| 5   | notice        |
+| 4   | warning       |
+| 3   | error         |
+| 2   | critical      |
+| 1   | alert         |
+| 0   | emergency     |
+
 ## Connection options
 
 **falco-exporter** uses gRPC over a Unix socket by default. 
