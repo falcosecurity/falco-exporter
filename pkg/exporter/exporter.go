@@ -3,6 +3,7 @@ package exporter
 import (
 	"context"
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/falcosecurity/client-go/pkg/api/outputs"
@@ -22,6 +23,7 @@ var (
 			"source",
 			"k8s_ns_name",
 			"k8s_pod_name",
+			"tags",
 		},
 	)
 )
@@ -39,6 +41,7 @@ func Forward(res *outputs.Response) error {
 		"source":       res.Source.String(),
 		"k8s_ns_name":  "",
 		"k8s_pod_name": "",
+		"tags":         fmt.Sprintf(",%s,", strings.Join(res.Tags, ",")),
 	}
 
 	// Ensure OutputFields are enabled
