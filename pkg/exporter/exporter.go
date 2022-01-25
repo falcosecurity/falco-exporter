@@ -38,7 +38,7 @@ func Forward(res *outputs.Response) error {
 		"rule":         res.Rule,
 		"priority":     fmt.Sprintf("%d", res.Priority),
 		"hostname":     res.Hostname,
-		"source":       res.Source.String(),
+		"source":       res.Source,
 		"k8s_ns_name":  "",
 		"k8s_pod_name": "",
 		"tags":         fmt.Sprintf(",%s,", strings.Join(res.Tags, ",")),
