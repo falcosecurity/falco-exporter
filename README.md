@@ -8,7 +8,7 @@
 
 ## Prerequisites
 
-- Before using **falco-exporter**, you need [Falco installed](https://falco.org/docs/installation/) and running with the [gRPC Output](https://falco.org/docs/grpc/) enabled (over Unix socket by default).
+- Before using **falco-exporter**, you need [Falco installed](https://falco.org/docs/getting-started/installation/) and running with the [gRPC Output](https://falco.org/docs/grpc/) enabled (over Unix socket by default).
 - Since **falco-exporter** `v0.3.0`: 
   - the minimum required version of Falco is `0.24.0`
   - if using Helm, the minimum required version of the [Falco Chart](https://github.com/falcosecurity/charts/tree/master/falco) is `v1.2.0`
