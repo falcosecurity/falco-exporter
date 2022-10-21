@@ -48,7 +48,7 @@ Usage of ./falco-exporter:
 To run **falco-exporter** in a container using Docker:
 
 ```shell
-docker run -v /path/to/falco.sock:/var/run/falco.sock falcosecurity/falco-exporter
+docker run -v /path/to/falco.sock:/run/falco/falco.sock falcosecurity/falco-exporter
 ```
 
 ### Deploy in Kubernetes
