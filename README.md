@@ -28,18 +28,18 @@ Command line usage:
 ```
 $ ./falco-exporter --help
 Usage of ./falco-exporter:
-      --client-ca string                CA root file path for connecting to a Falco gRPC server (default "/etc/falco/certs/ca.crt")
-      --client-cert string              cert file path for connecting to a Falco gRPC server (default "/etc/falco/certs/client.crt")
-      --client-hostname string          hostname for connecting to a Falco gRPC server, if set, takes precedence over --client-socket
-      --client-key string               key file path for connecting to a Falco gRPC server (default "/etc/falco/certs/client.key")
-      --client-port uint16              port for connecting to a Falco gRPC server (default 5060)
-      --client-socket string            unix socket path for connecting to a Falco gRPC server (default "unix:///var/run/falco.sock")
-      --listen-address string           address on which to expose the Prometheus metrics (default ":9376")
-      --probes-listen-address string    address on which to expose readiness/liveness probes endpoints (default ":19376")
-      --server-ca string                CA root file path for metrics https server
-      --server-cert string              cert file path for metrics https server
-      --server-key string               key file path for metrics https server
-      --timeout duration                timeout for initial gRPC connection (default 2m0s)
+      --client-ca string               CA root file path for connecting to a Falco gRPC server (default "/etc/falco/certs/ca.crt")
+      --client-cert string             cert file path for connecting to a Falco gRPC server (default "/etc/falco/certs/client.crt")
+      --client-hostname string         hostname for connecting to a Falco gRPC server, if set, takes precedence over --client-socket
+      --client-key string              key file path for connecting to a Falco gRPC server (default "/etc/falco/certs/client.key")
+      --client-port uint16             port for connecting to a Falco gRPC server (default 5060)
+      --client-socket string           unix socket path for connecting to a Falco gRPC server (default "unix:///run/falco/falco.sock")
+      --listen-address string          address on which to expose the Prometheus metrics (default ":9376")
+      --probes-listen-address string   address on which to expose readiness/liveness probes endpoints (default ":19376")
+      --server-ca string               CA root file path for metrics https server
+      --server-cert string             cert file path for metrics https server
+      --server-key string              key file path for metrics https server
+      --timeout duration               timeout for initial gRPC connection (default 2m0s)
 ```
 
 ### Run with Docker
