@@ -9,7 +9,7 @@ This will result in a **falco-exporter** Pod being deployed to each node.
 
 The default configurations for connecting to a Falco gRPC server over Unix socket are:
 
-- client-socket: `unix:///var/run/falco/falco.sock`
+- client-socket: `unix:///run/falco/falco.sock`
 - timeout: `2m`
 - listen-address: `0.0.0.0:9376`
 
