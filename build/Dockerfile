@@ -1,4 +1,4 @@
-FROM golang:1.14-buster AS builder
+FROM golang:1.17-buster AS builder
 
 ENV GO111MODULE on
 ENV CGO_ENABLED 0
