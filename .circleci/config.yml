@@ -26,12 +26,22 @@ jobs:
           command: make test
   release:
     docker:
-      - image: circleci/golang:1.17.5
+      - image: cimg/go:1.17
     steps:
       - checkout
-      - setup_remote_docker
+      - setup_remote_docker:
+          version: 20.10.12
       - run:
           name: Prepare env
           command: |
             echo ${DOCKERHUB_SECRET} | docker login -u ${DOCKERHUB_USER} --password-stdin
-      - run: curl -sL https://git.io/goreleaser | bash
+      - run:
+          name: Install goreleaser
+          command: |
+            echo 'deb [trusted=yes] https://repo.goreleaser.com/apt/ /' | sudo tee /etc/apt/sources.list.d/goreleaser.list
+            sudo apt update
+            sudo apt install goreleaser
+
+      - run:
+          name: Run goreleaser
+          command: goreleaser
