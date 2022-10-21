@@ -12,7 +12,8 @@
 - Since **falco-exporter** `v0.3.0`: 
   - the minimum required version of Falco is `0.24.0`
   - if using Helm, the minimum required version of the [Falco Chart](https://github.com/falcosecurity/charts/tree/master/falco) is `v1.2.0`
-
+- Since **falco-exporter** `v0.8.0`:
+  - the default Unix socket path is `/run/falco/falco.sock` to be compatible with Falco 0.33.0 and later (in previous version it defaulted to `/var/run/falco.sock`)
 
 ## Usage
 
