@@ -44,4 +44,4 @@ jobs:
 
       - run:
           name: Run goreleaser
-          command: goreleaser
+          command: goreleaser --timeout 10m
