@@ -5,19 +5,20 @@ builds:
     - linux
     goarch:
     - amd64
+    - arm64
     main: ./cmd/falco-exporter
     env:
       - CGO_ENABLED=0
     binary: falco-exporter
 
 dockers:
-  -
+  - use: buildx
     goos: linux
     goarch: amd64
     dockerfile: build/Dockerfile
     image_templates:
-      - "falcosecurity/falco-exporter:latest"
-      - "falcosecurity/falco-exporter:{{ .Version }}"
+      - "falcosecurity/falco-exporter:latest-amd64"
+      - "falcosecurity/falco-exporter:{{ .Version }}-amd64"
     build_flag_templates:
       - "--pull"
       - "--label=org.opencontainers.image.created={{.Date}}"
@@ -30,6 +31,36 @@ dockers:
       - go.mod
       - go.sum
       - Makefile
+  - use: buildx
+    goos: linux
+    goarch: arm64
+    dockerfile: build/Dockerfile
+    image_templates:
+      - "falcosecurity/falco-exporter:latest-arm64v8"
+      - "falcosecurity/falco-exporter:{{ .Version }}-arm64v8"
+    build_flag_templates:
+      - "--platform=linux/arm64/v8"
+      - "--pull"
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.name={{.ProjectName}}"
+      - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+      - "--label=org.opencontainers.image.version={{.Version}}"
+    extra_files:
+      - cmd
+      - pkg
+      - go.mod
+      - go.sum
+      - Makefile
+docker_manifests:
+  # https://goreleaser.com/customization/docker_manifest/
+  - name_template: falcosecurity/falco-exporter:{{ .Version }}
+    image_templates:
+      - falcosecurity/falco-exporter:{{ .Version }}-amd64
+      - falcosecurity/falco-exporter:{{ .Version }}-arm64v8
+  - name_template: falcosecurity/falco-exporter:latest
+    image_templates:
+      - falcosecurity/falco-exporter:latest-amd64
+      - falcosecurity/falco-exporter:latest-arm64v8
 
 release:
   github:
