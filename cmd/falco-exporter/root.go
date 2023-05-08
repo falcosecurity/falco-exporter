@@ -51,6 +51,8 @@ func main() {
 	pflag.StringVar(&config.CertFile, "client-cert", "/etc/falco/certs/client.crt", "cert file path for connecting to a Falco gRPC server")
 	pflag.StringVar(&config.KeyFile, "client-key", "/etc/falco/certs/client.key", "key file path for connecting to a Falco gRPC server")
 	pflag.StringVar(&config.CARootFile, "client-ca", "/etc/falco/certs/ca.crt", "CA root file path for connecting to a Falco gRPC server")
+	pflag.BoolVar(&config.GRPCAuth, "grpc-auth", true, "Whether or not falco-exporter authenticates itself to the gRPC server")
+
 
 	pflag.CommandLine.AddGoFlagSet(goflag.CommandLine)
 	pflag.Parse()
