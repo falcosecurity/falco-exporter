@@ -1,11 +1,14 @@
 # falco-exporter
-> Prometheus Metrics Exporter for Falco output events
+
+[![Falco Ecosystem Repository](https://github.com/falcosecurity/evolution/blob/main/repos/badges/falco-ecosystem-blue.svg)](https://github.com/falcosecurity/evolution/blob/main/REPOSITORIES.md#ecosystem-scope) [![Stable](https://img.shields.io/badge/status-stable-brightgreen?style=for-the-badge)](https://github.com/falcosecurity/evolution/blob/main/REPOSITORIES.md#stable)
 
 [![Release](https://img.shields.io/github/release/falcosecurity/falco-exporter.svg?style=flat-square)](https://github.com/falcosecurity/falco-exporter/releases/latest)
 [![License](https://img.shields.io/github/license/falcosecurity/falco-exporter?style=flat-square)](LICENSE)
 [![Go Report Card](https://goreportcard.com/badge/github.com/falcosecurity/falco-exporter?style=flat-square)](https://goreportcard.com/report/github.com/falcosecurity/falco-exporter)
 [![Docker pulls](https://img.shields.io/docker/pulls/falcosecurity/falco-exporter?style=flat-square)](https://hub.docker.com/r/falcosecurity/falco-exporter)
 ![Architectures](https://img.shields.io/badge/ARCHS-x86__64%7Caarch64-blueviolet?style=flat-square)
+
+Prometheus Metrics Exporter for Falco output events
 
 ## Prerequisites
 
