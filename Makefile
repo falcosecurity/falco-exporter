@@ -1,6 +1,7 @@
 SHELL=/bin/bash -o pipefail
 
 GO ?= go
+BUILD_ARGS ?= build
 HELM ?= helm
 CHART_SOURCE_DIR ?= $(shell pwd)/../charts/falco-exporter
 
@@ -8,7 +9,7 @@ TEST_FLAGS ?= -v -race
 
 .PHONY: falco-exporter
 falco-exporter:
-	$(GO) build ./cmd/falco-exporter
+	$(GO) $(BUILD_ARGS) ./cmd/falco-exporter
 
 .PHONY: deploy/k8s
 deploy/k8s:
