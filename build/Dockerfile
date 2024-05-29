@@ -11,7 +11,7 @@ RUN go mod download
 COPY . .
 RUN make
 
-FROM alpine:3.16
+FROM alpine:3.18
 WORKDIR /opt/falco-exporter
 
 COPY --from=builder /opt/falco-exporter/falco-exporter /usr/bin/falco-exporter
