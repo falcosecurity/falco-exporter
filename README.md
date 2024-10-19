@@ -15,7 +15,7 @@ Prometheus Metrics Exporter for Falco output events
 - Before using **falco-exporter**, you need [Falco installed](https://falco.org/docs/getting-started/installation/) and running with the [gRPC Output](https://falco.org/docs/grpc/) enabled (over Unix socket by default).
 - Since **falco-exporter** `v0.3.0`: 
   - the minimum required version of Falco is `0.24.0`
-  - if using Helm, the minimum required version of the [Falco Chart](https://github.com/falcosecurity/charts/tree/master/falco) is `v1.2.0`
+  - if using Helm, the minimum required version of the [Falco Chart](https://github.com/falcosecurity/charts/tree/master/charts/falco) is `v1.2.0`
 - Since **falco-exporter** `v0.8.0`:
   - the default Unix socket path is `/run/falco/falco.sock` to be compatible with Falco 0.33.0 and later (in previous version it defaulted to `/var/run/falco.sock`)
 
@@ -59,7 +59,7 @@ docker run -v /path/to/falco.sock:/run/falco/falco.sock falcosecurity/falco-expo
 
 ### Using Helm
 
-Using the [falco-exporter Helm Chart](https://github.com/falcosecurity/charts/tree/master/falco-exporter) is the easiest way to deploy **falco-exporter**.
+Using the [falco-exporter Helm Chart](https://github.com/falcosecurity/charts/tree/master/charts/falco-exporter) is the easiest way to deploy **falco-exporter**.
 
 Before installing the chart, add the `falcosecurity` charts repository:
 
@@ -68,13 +68,13 @@ helm repo add falcosecurity https://falcosecurity.github.io/charts
 helm repo update
 ```
 
-Finally, to install the chart with the release name `falco-exporter` and default [configuration values](https://github.com/falcosecurity/charts/blob/master/falco-exporter/values.yaml):
+Finally, to install the chart with the release name `falco-exporter` and default [configuration values](https://github.com/falcosecurity/charts/blob/master/charts/falco-exporter/values.yaml):
 
 ```shell
 helm install falco-exporter falcosecurity/falco-exporter
 ```
 
-The full documentation of the Helm Chart is [here](https://github.com/falcosecurity/charts/tree/master/falco-exporter).
+The full documentation of the Helm Chart is [here](https://github.com/falcosecurity/charts/blob/master/charts/falco-exporter/README.md).
 
 ### Using resource templates
 
