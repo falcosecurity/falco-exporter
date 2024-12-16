@@ -1,12 +1,15 @@
 # falco-exporter
 
-[![Falco Ecosystem Repository](https://github.com/falcosecurity/evolution/blob/main/repos/badges/falco-ecosystem-blue.svg)](https://github.com/falcosecurity/evolution/blob/main/REPOSITORIES.md#ecosystem-scope) [![Stable](https://img.shields.io/badge/status-stable-brightgreen?style=for-the-badge)](https://github.com/falcosecurity/evolution/blob/main/REPOSITORIES.md#stable)
+[![Falco Ecosystem Repository](https://github.com/falcosecurity/evolution/blob/main/repos/badges/falco-ecosystem-blue.svg)](https://github.com/falcosecurity/evolution/blob/main/REPOSITORIES.md#ecosystem-scope) [![Deprecated](https://img.shields.io/badge/status-deprecated-inactive?style=for-the-badge)](https://github.com/falcosecurity/evolution/blob/main/REPOSITORIES.md#deprecated)
 
 [![Release](https://img.shields.io/github/release/falcosecurity/falco-exporter.svg?style=flat-square)](https://github.com/falcosecurity/falco-exporter/releases/latest)
 [![License](https://img.shields.io/github/license/falcosecurity/falco-exporter?style=flat-square)](LICENSE)
 [![Go Report Card](https://goreportcard.com/badge/github.com/falcosecurity/falco-exporter?style=flat-square)](https://goreportcard.com/report/github.com/falcosecurity/falco-exporter)
 [![Docker pulls](https://img.shields.io/docker/pulls/falcosecurity/falco-exporter?style=flat-square)](https://hub.docker.com/r/falcosecurity/falco-exporter)
 ![Architectures](https://img.shields.io/badge/ARCHS-x86__64%7Caarch64-blueviolet?style=flat-square)
+
+**NOTICE**: This project is currently being **deprecated**. Contributions are not accepted, and the repository will be fully archived in the future. Starting from Falco version 0.38, Falco can expose Prometheus metrics directly, eliminating the need for a separate exporter. For further details, please refer to the [official documentation](https://falco.org/docs/metrics/).
+
 
 Prometheus Metrics Exporter for Falco output events
 
